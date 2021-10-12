@@ -1,4 +1,14 @@
-it("cancels the asynchronous failure callback", async () => {
+it("throws then resolves", async () => {
+  const p = Promise.reject(new Error("myError")).then(undefined, (e) => {
+    expect(e).toBeInstanceOf(Error);
+
+    return "handled";
+  });
+
+  await expect(p).resolves.toBe("handled");
+});
+
+it("throws twice", async () => {
   const p = Promise.reject(new Error("myError")).then(undefined, (e) => {
     expect(e).toBeInstanceOf(Error);
 
